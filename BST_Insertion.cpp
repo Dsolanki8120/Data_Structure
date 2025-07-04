@@ -12,7 +12,7 @@ struct Node{
         right=NULL;
     }
 };
-
+// Insert a new Node using recursive method  
 Node*insert(Node*node,int x)
 {
     Node*temp=new Node(x);
@@ -40,6 +40,36 @@ void inorder(Node*root)
         inorder(root->right);
     }
 }
+
+// Insert a new node using iterative method  
+
+Node*insert_iterative(Node*root,int x)
+{
+    Node*temp= new Node(x);
+
+    if(root==NULL)
+        return temp;
+    Node*parent=NULL;
+    Node*crr= root;
+    while(crr!=NULL)
+        {
+             parent=crr;
+            if(crr->key<x)
+                crr=crr->right;
+            else if(crr->key>x)
+                crr=crr->left;
+            else
+                return root;
+        }
+    if(parent->key>x)
+        parent->left=temp;
+    else
+        parent->right=temp;
+
+    return root;
+}
+
+
 
 int main()
 {
