@@ -1,0 +1,66 @@
+#include<vector>
+#include<iostream>
+#include<climits>
+#include<deque>
+using namespace std;
+
+void Dijkstra(int n ,vector<vector<int>>&edge,vector<int>&dist)
+{
+ vector<vector<pair<int,int>>>adjlist(n);
+ int src=0;
+ deque<int>q;
+ dist[src]=0;
+ q.push_back(src);
+ for(auto&it:edge)
+    {
+        int u=it[0];
+        int v=it[1];
+        int w=it[2];
+        adjlist[u].push_back({v,w});
+        adjlist[v].push_back({u,w});
+
+    }
+
+    q.push_back(src);
+    while(!q.empty())
+    {
+        int u=q.front();
+        q.pop_front();
+        for(auto &neight:adjlist[u])
+        {
+            int v=neight.first;
+            int w=neight.second;
+
+            if(dist[u]+w<dist[v])
+            {
+               dist[v]=dist[u]+w;
+
+               if(w==0)
+               q.push_front(v);
+               else
+               q.push_back(v);
+            }
+        }
+    }
+
+}
+
+int main()
+{
+    vector<vector<int>>edge={
+        {0,1,0},{0,7,1},{1,2,1},{1,7,1},{2,3,0},{2,5,0},{2,8,1},
+        {3,4,1},{3,5,1},{4,5,1},{5,6,1},{6,7,1},{7,8,1}
+    };
+ 
+ vector<int>adj(9,INT_MAX);
+    Dijkstra(9,edge,adj);
+
+    for(auto it: adj)
+    {
+        cout<<it<<" ";
+    }
+    cout<<endl;
+    return 0;
+}
+
+
